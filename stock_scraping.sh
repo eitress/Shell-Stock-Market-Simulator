@@ -28,13 +28,17 @@ def get_symbol(stock):
 def scrape_site(stock):
     url = "https://finance.yahoo.com/quote/"+stock
     print(url)
-    response = requests.get(url)
-    soup = bs4.BeautifulSoup(response.text, "xml")
-    print(soup)
+    source_code = requests.get(url)
+    plain_text = source_code.text
+    soup = BeautifulSoup(plain_text, "html.parser")
+    price = soup.find_all('div', {'class':'My(6px) Pos(r) smartphone_Mt(6px)'})[0].find('span').text
+    fprice = float(price)
+    return fprice
 
 if __name__ == '__main__':
 
     symbol = parse_args()
     company = get_symbol(symbol)
     if company != "NO COMPANY":
-        print("True")
+        price = scrape_site(symbol)
+        print(price)
