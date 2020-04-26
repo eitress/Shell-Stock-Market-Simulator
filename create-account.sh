@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import json
 
 def choose_username():
 	#the user inputs a username that is not taken
@@ -20,6 +21,15 @@ def choose_username():
 		if username_is_taken == False:
 			valid_user_name = True
 	return username
+
+def create_user_info_object(username):
+	#add a user object to the "users" array in the user_info.json file
+	user_info = open("./user_info.json")
+	data = json.load(user_info)
+	for user in data['users']:
+		print(user)
+	user_info.close()
+	
 
 def choose_password():
 	#user can input any password
@@ -42,6 +52,7 @@ def main():
 	users_file.close()
 	contacts = open ("./contacts.txt", "a")
 	contacts.write(email + "\n")
+	create_user_info_object(username)
 	print("your account has been created!") 
-
+	
 main()
