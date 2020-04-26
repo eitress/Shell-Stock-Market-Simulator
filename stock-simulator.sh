@@ -415,13 +415,6 @@ def main():
     print("Hello, " + username + "! It's nice to see you again.")
     print("")
 
-    answer= input("would you like to send emails? yes or no: ")
-    if answer == "yes":
-        print("Great, we'll send emails!")
-        os.system('./send-emails.sh')
-    else:
-        print("okay, we won't send any!")
-
     line_num = parse_portfolio()
 
     while True:
@@ -434,7 +427,8 @@ def main():
         print("4. Check Price")
         print("5. Transaction History")
         print("6. Show Graphs")
-        print("7. Quit")
+        print("7. Send Emails")
+        print("8. Quit")
 
         try:
             ans = int(input("\nChoose an option: "))
@@ -459,6 +453,8 @@ def main():
         elif (ans == 6):
             show_graphs()
         elif (ans == 7):
+            os.system('./send-emails.sh')
+        elif (ans == 8):
             write_portfolio(line_num)
             write_history()
 

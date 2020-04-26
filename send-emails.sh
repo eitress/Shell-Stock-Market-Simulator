@@ -26,7 +26,6 @@ def main():
 	host = "smtp.gmail.com"
 	port = 587
 	selection = "Gmail"
-	print("about to enter the while loop")
 	provider_complete = False
 
 	# select email provider 
