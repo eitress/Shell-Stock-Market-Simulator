@@ -2,13 +2,59 @@
 
 from datetime import datetime
 from getpass import getpass
+import matplotlib.pyplot as plt
 import os
+import stock_saving as stsv
 import stock_scraping as scrp
 
 portfolio = {}
 history = []
 username = ""
 
+def show_graphs():
+
+    print("SHOW GRAPHS")
+
+    cash = portfolio["cash"]
+    stocks = portfolio["stocks"]
+
+    overall = stsv.obtain_current()
+        
+    while True:
+
+        print("Enter a valid ticker, 'portfolio' for the total portfolio value, or '.' to return.")
+        tck = input("Ticker: ").upper()
+
+        if tck == '.':
+            return
+        elif tck == 'PORTFOLIO':
+            #TODO
+            print("\nTODO\n")
+        elif tck not in stocks:
+            print("\nYou don't own any {} stocks.\n".format(tck))
+        else:
+            if tck in overall:
+                hist = overall[tck]
+                cont = 0
+                yaxis = []
+                for day,val in hist.items():
+                    if val < 0:
+                        cont += 1
+                    else:
+                        yaxis.append(val)
+                xaxis = range(0,7-cont)
+                plt.xticks(xaxis)
+                plt.ylabel("Price")
+                plt.xlabel("Day")
+                if cont < 6:
+                    plt.plot(xaxis,yaxis)
+                else:
+                    plt.plot(xaxis,yaxis,'ro')
+                plt.show()
+            else:
+                print("\nThis stock is too recent to have a graph.\n")
+
+                
 def write_portfolio(line_num):
 
     global username
@@ -382,7 +428,8 @@ def main():
         print("3. Sell Stocks")
         print("4. Check Price")
         print("5. Transaction History")
-        print("6. Quit")
+        print("6. Show Graphs")
+        print("7. Quit")
 
         try:
             ans = int(input("\nChoose an option: "))
@@ -405,6 +452,8 @@ def main():
         elif (ans == 5):
             show_history()
         elif (ans == 6):
+            show_graphs()
+        elif (ans == 7):
             write_portfolio(line_num)
             write_history()
 

@@ -6,6 +6,7 @@ overall = {}
 # The dictionary overall is saved such that users are keys, and dictionaries are the values
 # These sub-dictionaries have keys 1-7 corresponding to the 1st most recent portfolio, 2nd most, etc.
 def parse_history():
+    global overall
     with open('portfoliohistory.txt', 'r') as f:
         line = f.readline()
         while(line):
@@ -35,6 +36,7 @@ def parse_history():
 # Should be called every time a user is created, will add user to the file/dictionary if not already there
 # Note that when a portfolio does not exist for a user, the value will be saved as ''
 def initial_save(username):
+    global overall
     if username in overall:
         print(overall[username])
     else:
@@ -48,6 +50,7 @@ def initial_save(username):
 
 # Should be called when a user account is reset
 def reset_user(username):
+    global overall
     if username in overall:
         temp = {1: '', 2: '', 3: '', 4: '', 5: '', 6: '', 7:''}
         tempString = username + ":::::::" + "\n"
@@ -70,6 +73,7 @@ def reset_user(username):
 # Updates the dictonary and file with the current portfolio as the most recent
 # Will likely only be called by the crontab
 def update_all():
+    global overall
     open('portfoliohistory.txt', 'w').close()
     for user in overall:
         overall[user][7] = overall[user][6]
@@ -102,10 +106,11 @@ def update_all():
 # Will likely need to be called to create pyplots
 # Returns the current dictionary
 def obtain_current():
+    global overall
     parse_history()
     return overall
 
-parse_history()
+#parse_history()
 
 if __name__ == '__main__':
     # initial_save('aismaiel')

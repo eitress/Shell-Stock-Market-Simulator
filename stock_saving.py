@@ -7,6 +7,7 @@ overall = {}
 # The dictionary overall is saved such that tickers are keys, and dictionaries are the values
 # These sub-dictionaries have keys 1-7 corresponding to the 1st most recent price, 2nd most, etc.
 def parse_history():
+    global overall
     with open('stockhistory.txt', 'r') as f:
         line = f.readline()
         while(line):
@@ -36,6 +37,7 @@ def parse_history():
 # Should be called every time a user buys a stock, will add stock to the file/dictionary if not already there
 # Note that when a history does not exist for a stock, the value will be saved as -1
 def initial_save(ticker):
+    global overall
     if ticker in overall:
         print(overall[ticker])
     else:
@@ -50,6 +52,7 @@ def initial_save(ticker):
 # Updates the dictonary and file with the current price of a stock as the most recent
 # Will likely only be called by the crontab
 def update_all():
+    global overall
     open('stockhistory.txt', 'w').close()
     for stock in overall:
         overall[stock][7] = overall[stock][6]
@@ -74,10 +77,11 @@ def update_all():
 # Will likely need to be called to create pyplots
 # Returns the current dictionary
 def obtain_current():
+    global overall
     parse_history()
     return overall
 
-parse_history()
+#parse_history()
 
 if __name__ == '__main__':
     update_all()
