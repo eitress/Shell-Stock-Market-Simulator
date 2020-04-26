@@ -1,0 +1,2 @@
+0 16 * * 1-5 python stock_saving.py
+0 16 * * 1-5 python portfolio_saving.py

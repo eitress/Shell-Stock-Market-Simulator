@@ -92,7 +92,9 @@ def update_all():
                 if account[0] == user:
                     break
                 line_num += 1
-            stocks = account[2][:-1]
+
+            stocks = account[1] + "?" + account[2][:-1]
+            print(stocks)
 
         overall[user][1] = stocks
         tempString = user
