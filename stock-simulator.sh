@@ -7,6 +7,7 @@ import portfolio_saving as pfsv
 import os
 import stock_saving as stsv
 import stock_scraping as scrp
+import argparse
 
 portfolio = {}
 history = []
@@ -125,6 +126,7 @@ def parse_portfolio():
 
     global username
     global portfolio
+    account = {}
 
     with open('portfolio.txt', 'r') as f:
         line_num = 0
@@ -419,6 +421,9 @@ def segment():
     print("\n-----------------------------------------------------------------------------------\n")
 
 def main():
+
+    parser = argparse.ArgumentParser(description='Either log in or create a new account. Upon creating a new account, you will start with $10,000.00 of cash to invest. After logging in, you can view your portfolio, buy stocks, sell stocks, check stock prices, view your transaction history, see graphs, or send emails to other users about your progress.')
+    args = parser.parse_args()
 
     global username
 

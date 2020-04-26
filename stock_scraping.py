@@ -35,7 +35,12 @@ def scrape_site(stock):
     plain_text = source_code.text
     soup = BeautifulSoup(plain_text, "html.parser")
     price = soup.find_all('div', {'class':'My(6px) Pos(r) smartphone_Mt(6px)'})[0].find('span').text
-    fprice = float(price)
+    fprice = 0.0
+    if isinstance(price, str):
+        no_comma_price = price.replace(',', '')
+        fprice = float(no_comma_price)
+    else:
+        fprice = float(price)
     return fprice
 
 # Given any query and integer amount i, gives the first i news articles on query
