@@ -4,7 +4,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from getpass import getpass
-
+import argparse
 
 def read_template(filename):
 	with open(filename, 'r', encoding='utf-8') as template_file:
@@ -19,9 +19,22 @@ def get_contacts(filename):
 			emails.append(a_email.split()[0])
 	return emails
 
-def main():	
+def main():
+	#get the username
+	parser = argparse.ArgumentParser()
+	parser.add_argument('username')
+	args = parser.parse_args()
+	username = args.username
+	port_value = 0
+	#get the total value of the portfolio
+	portfolio = open('./portfolio.txt', 'r')
+	portfolio_lines = portfolio.readlines()
+	for line in portfolio_lines:
+		split_line = line.split(':')
+		if username == split_line[0]:
+			port_value = split_line[1]
+	portfolio.close()	
 	#set up SMTP server
-
 	# default email provider
 	host = "smtp.gmail.com"
 	port = 587

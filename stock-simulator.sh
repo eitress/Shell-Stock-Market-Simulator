@@ -453,7 +453,9 @@ def main():
         elif (ans == 6):
             show_graphs()
         elif (ans == 7):
-            os.system('./send-emails.sh')
+            command = "./send-emails.sh " + username
+            print(command)
+            os.system(command)
         elif (ans == 8):
             write_portfolio(line_num)
             write_history()
