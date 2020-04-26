@@ -31,9 +31,9 @@ while chose_correct_action == False:
 		print("you want to create an account!")
 		os.system('./create-account.sh')
 		USER = login()
-		
+
 		chose_correct_action = True
-		
+
 	else:
 		print("you fucked up!")
 
