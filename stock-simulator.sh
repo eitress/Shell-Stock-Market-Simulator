@@ -260,7 +260,7 @@ def write_history():
             total = round(data[5],2)
             cash = round(data[6],2)
 
-            line = "{};{};{};{};{};{};{}\n".format(date,oprt,tck,price,quant,total,cash)
+            line = "{};{};{};{};{};{};{}\n".format(dateT,oprt,tck,price,quant,total,cash)
 
             f.write(line)
 
@@ -288,7 +288,7 @@ def show_history():
 
                 print("{:>12} {:>10} {:>6} {:>8} {:>10} {:>15} {:>15}".format(date,oprt,tck,price,quant,total,cash))
 
-    if len(history) == 0:
+    elif len(history) == 0:
         print("No Transactions Completed Yet.")
         return
 
@@ -330,9 +330,11 @@ def login():
         print("This username and password combination was not found. Try again please.")
 
 def segment():
-    print("\n------------------------------------------------------------\n")
+    print("\n-----------------------------------------------------------------------------------\n")
 
 def main():
+
+    global username
 
     print("WELCOME TO THE BEST TRADING SIMULTOR")
     print("")
@@ -406,7 +408,7 @@ def main():
             write_portfolio(line_num)
             write_history()
 
-            print("Application Closed.")
+            print("Application Closed.\n")
             return
         else:
             print("PLEASE PICK A VALID OPTION.\n")
