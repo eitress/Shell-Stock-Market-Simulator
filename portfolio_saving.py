@@ -3,8 +3,8 @@ import os
 overall = {}
 
 # Reads the stockhistory file, create the dictionary overall from it
-# The dictionary overall is saved such that tickers are keys, and dictionaries are the values
-# These sub-dictionaries have keys 1-7 corresponding to the 1st most recent price, 2nd most, etc.
+# The dictionary overall is saved such that users are keys, and dictionaries are the values
+# These sub-dictionaries have keys 1-7 corresponding to the 1st most recent portfolio, 2nd most, etc.
 def parse_history():
     with open('portfoliohistory.txt', 'r') as f:
         line = f.readline()
@@ -32,8 +32,8 @@ def parse_history():
         # print(overall)
     return
 
-# Should be called every time a user buys a stock, will add stock to the file/dictionary if not already there
-# Note that when a history does not exist for a stock, the value will be saved as -1
+# Should be called every time a user is created, will add user to the file/dictionary if not already there
+# Note that when a portfolio does not exist for a user, the value will be saved as ''
 def initial_save(username):
     if username in overall:
         print(overall[username])
@@ -46,7 +46,28 @@ def initial_save(username):
         print(overall[username])
     return
 
-# Updates the dictonary and file with the current price of a stock as the most recent
+# Should be called when a user account is reset
+def reset_user(username):
+    if username in overall:
+        temp = {1: '', 2: '', 3: '', 4: '', 5: '', 6: '', 7:''}
+        tempString = username + ":::::::" + "\n"
+        # overall[username] = temp
+        with open("portfoliohistory.txt", "r") as file:
+            data = file.readlines()
+
+
+        for i in range(len(data)):
+            temp = data[i].split(":")
+            if temp[0] == username:
+                data[i] = tempString
+                break
+
+        with open("portfoliohistory.txt", "w") as file:
+            file.writelines(data)
+
+    return
+
+# Updates the dictonary and file with the current portfolio as the most recent
 # Will likely only be called by the crontab
 def update_all():
     open('portfoliohistory.txt', 'w').close()
@@ -88,5 +109,5 @@ parse_history()
 
 if __name__ == '__main__':
     # initial_save('aismaiel')
-    # update_all()
-    print(obtain_current())
+    update_all()
+    # reset_user("aismaiel")
