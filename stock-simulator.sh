@@ -85,6 +85,7 @@ def parse_portfolio():
 
     global username
     global portfolio
+    account = {}
 
     with open('portfolio.txt', 'r') as f:
         line_num = 0
