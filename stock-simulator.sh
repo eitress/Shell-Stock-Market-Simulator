@@ -14,46 +14,33 @@ portfolio = {}
 history = []
 username = ""
 
-def restart_user_portfolio(username):
-    reading_file = open("./portfolio.txt", "r")
-    new_file_content = ""
-    print("you are about to read the file")
-    for line in reading_file:
-        split_line = line.split(":")
-        print("here is the line")
-        print(split_line)
-        print("here is the username")
-        print(username)
-        if split_line[0] == username:
-            print("adding the replacement to new content")
-            new_file_content += "" + username + ":10000.0:\n"
-        else:
-            print("you are writing the original line")
-            print(line)
-            new_file_content += line
-    print("here is the new file content")
-    print(new_file_content)
-
-    reading_file.close()    
-    print("wiping the file")
+def restart_user_portfolio(line_num):
+    global username
+    global portfolio
     
-    os.remove("portfolio.txt")
-    print("the file has been removed")
+    new_line = username+":10000.00:\n"
     
-    with open('portfolio.txt', 'w') as portfolio:
-        portfolio.write(new_file_content)        
+    with open('portfolio.txt', 'r') as f:
+        data = f.readlines()
 
-    #file = open("./portfolio.txt", "w")
-    #file.truncate(0)
-    #file.close()
+        data[line_num] = new_line
 
-    #new_file = open("./portfolio.txt", "w")
-    #new_file.write(new_file_content)
-    #new_file.close()     
+    with open('portfolio.txt', 'w') as f:
+        f.writelines(data)
 
-def erase_user_history(username):
-    path = "./history/" + username + ".txt"
-    open(path, "w").close()
+    portfolio = {}
+    parse_portfolio()
+
+def erase_user_history():
+    global username
+    global history
+    
+    filename = "history/" + username + ".txt"
+
+    if os.path.exists(filename):
+        os.remove(path)
+
+    history = []
  
 def show_graphs():
 
@@ -550,8 +537,8 @@ def main():
             find_articles()
         elif (ans == 9):
             pfsv.reset_user(username)
-            restart_user_portfolio(username)
-            erase_user_history(username)
+            restart_user_portfolio(line_num)
+            erase_user_history()
         elif (ans == 10):
             write_portfolio(line_num)
             write_history()
