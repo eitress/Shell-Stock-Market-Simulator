@@ -43,7 +43,7 @@ def show_graphs():
                         pf_val += float(data_3[1]) * int(data_3[2])
                 hist_port.append(cash + pf_val)
 
-            
+
     while True:
 
         print("Enter a valid ticker, 'portfolio' for the total portfolio value, or '.' to return.")
@@ -71,7 +71,7 @@ def show_graphs():
                 else:
                     plt.plot(xaxis,yaxis,'ro')
                 plt.show()
-            
+
         elif tck not in stocks:
             print("\nYou don't own any {} stocks.\n".format(tck))
         else:
@@ -95,7 +95,7 @@ def show_graphs():
                 plt.show()
             else:
                 print("\nThis stock is too recent to have a graph.\n")
-                
+
 def write_portfolio(line_num):
 
     global username
@@ -352,6 +352,10 @@ def write_history():
 
             f.write(line)
 
+def find_articles():
+    print("\nCURRENT ARTICLES\n")
+    scrp.get_articles("Finance")
+
 def show_history():
 
     global username
@@ -474,7 +478,8 @@ def main():
         print("4. Check Price")
         print("5. Transaction History")
         print("6. Show Graphs")
-        print("7. Quit")
+        print("7. See Articles")
+        print("8. Quit")
 
         try:
             ans = int(input("\nChoose an option: "))
@@ -499,6 +504,8 @@ def main():
         elif (ans == 6):
             show_graphs()
         elif (ans == 7):
+            find_articles()
+        elif (ans == 8):
             write_portfolio(line_num)
             write_history()
 
