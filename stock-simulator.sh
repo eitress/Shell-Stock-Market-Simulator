@@ -13,6 +13,24 @@ portfolio = {}
 history = []
 username = ""
 
+def reset_user_port(username):
+    tempString = username + ":::::::" + "\n"
+    file = open("portfolio.txt", "r")
+    file_lines = file.readlines()
+    i = 0
+    for line in file_lines:
+        line_array = line.split(":")
+        if line_array[0] == username:
+            print("FOUND MATCH FOR PORTFOLIO")
+            file_lines[i] = tempString
+            break
+        i += 1
+    file.close()
+
+    with open("portfolio.txt", "w") as file:
+        print("about to write to the file")
+        file.writelines(file_lines)
+
 def show_graphs():
 
     global username
@@ -474,7 +492,8 @@ def main():
         print("6. Show Graphs")
         print("7. Send Emails")
         print("8. See Articles")
-        print("9. Quit")
+        print("9. Restart Simulation")
+        print("10. Quit")
 
         try:
             ans = int(input("\nChoose an option: "))
@@ -505,6 +524,9 @@ def main():
         elif (ans == 8):
             find_articles()
         elif (ans == 9):
+            pfsv.reset_user(username)
+            reset_user_port(username)
+        elif (ans == 10):
             write_portfolio(line_num)
             write_history()
 

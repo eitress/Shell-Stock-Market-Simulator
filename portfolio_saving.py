@@ -51,6 +51,7 @@ def initial_save(username):
 # Should be called when a user account is reset
 def reset_user(username):
     global overall
+    print(overall)
     if username in overall:
         temp = {1: '', 2: '', 3: '', 4: '', 5: '', 6: '', 7:''}
         tempString = username + ":::::::" + "\n"
