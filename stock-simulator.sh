@@ -244,6 +244,7 @@ def buy_stock():
                     portfolio["cash"] = cash
 
                     history.append([datetime.now(),"BUY",tck,price,ans,ans*price,cash])
+                    stsv.initial_save(tck)
 
                 else:
                     print("Invalid Quantity. Transaction Aborted.\n")
