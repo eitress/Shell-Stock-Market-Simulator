@@ -8,29 +8,53 @@ import os
 import stock_saving as stsv
 import stock_scraping as scrp
 import argparse
+import fileinput
 
 portfolio = {}
 history = []
 username = ""
 
-def reset_user_port(username):
-    tempString = username + ":::::::" + "\n"
-    file = open("portfolio.txt", "r")
-    file_lines = file.readlines()
-    i = 0
-    for line in file_lines:
-        line_array = line.split(":")
-        if line_array[0] == username:
-            print("FOUND MATCH FOR PORTFOLIO")
-            file_lines[i] = tempString
-            break
-        i += 1
-    file.close()
+def restart_user_portfolio(username):
+    reading_file = open("./portfolio.txt", "r")
+    new_file_content = ""
+    print("you are about to read the file")
+    for line in reading_file:
+        split_line = line.split(":")
+        print("here is the line")
+        print(split_line)
+        print("here is the username")
+        print(username)
+        if split_line[0] == username:
+            print("adding the replacement to new content")
+            new_file_content += "" + username + ":10000.0:\n"
+        else:
+            print("you are writing the original line")
+            print(line)
+            new_file_content += line
+    print("here is the new file content")
+    print(new_file_content)
 
-    with open("portfolio.txt", "w") as file:
-        print("about to write to the file")
-        file.writelines(file_lines)
+    reading_file.close()    
+    print("wiping the file")
+    
+    os.remove("portfolio.txt")
+    print("the file has been removed")
+    
+    with open('portfolio.txt', 'w') as portfolio:
+        portfolio.write(new_file_content)        
 
+    #file = open("./portfolio.txt", "w")
+    #file.truncate(0)
+    #file.close()
+
+    #new_file = open("./portfolio.txt", "w")
+    #new_file.write(new_file_content)
+    #new_file.close()     
+
+def erase_user_history(username):
+    path = "./history/" + username + ".txt"
+    open(path, "w").close()
+ 
 def show_graphs():
 
     global username
@@ -154,7 +178,7 @@ def parse_portfolio():
             if account[0] == username:
                 break
             line_num += 1
-
+    
     portfolio["cash"] = float(account[1])
     portfolio["stocks"] = {}
 
@@ -525,7 +549,8 @@ def main():
             find_articles()
         elif (ans == 9):
             pfsv.reset_user(username)
-            reset_user_port(username)
+            restart_user_portfolio(username)
+            erase_user_history(username)
         elif (ans == 10):
             write_portfolio(line_num)
             write_history()
