@@ -12,10 +12,6 @@ user can sell stocks
 user can see their portfolio
 user can see the price of a certain stock
 user can see their history of transactions
-
-
-TODO:
-integrate stockSim.sh with stock-simulator.sh
-initialize portfolio once account is created
-graphs (to be discussed)
-conversion of stockSim.sh's main into a shell program (to be discussed)
+users can view current finance articles
+users can see graphs of their porfolio and individual stock changes
+history of stock changes, porfolio changes, overall stock purchase saved
