@@ -39,14 +39,14 @@ def parse_history():
 def initial_save(ticker):
     global overall
     if ticker in overall:
-        print(overall[ticker])
+        return
     else:
         temp = {1: -1, 2: -1, 3: -1, 4: -1, 5:-1, 6:-1, 7:-1}
         tempString = ticker + ":-1:-1:-1:-1:-1:-1:-1" + "\n"
         with open("stockhistory.txt", "a") as file:
             file.write(tempString)
         overall[ticker] = temp
-        print(overall[ticker])
+        # print(overall[ticker])
     return
 
 # Updates the dictonary and file with the current price of a stock as the most recent
@@ -80,8 +80,6 @@ def obtain_current():
     global overall
     parse_history()
     return overall
-
-#parse_history()
 
 if __name__ == '__main__':
     update_all()

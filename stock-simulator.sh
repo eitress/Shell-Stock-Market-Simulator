@@ -3,6 +3,7 @@
 from datetime import datetime
 from getpass import getpass
 import matplotlib.pyplot as plt
+import portfolio_saving as pfsv
 import os
 import stock_saving as stsv
 import stock_scraping as scrp
@@ -14,13 +15,35 @@ username = ""
 
 def show_graphs():
 
-    print("SHOW GRAPHS")
+    global username
+
+    print("\nSHOW GRAPHS\n")
 
     cash = portfolio["cash"]
     stocks = portfolio["stocks"]
 
     overall = stsv.obtain_current()
-        
+    over_port = pfsv.obtain_current()
+
+    hist_port = []
+
+    if username in over_port:
+        part_port = over_port[username]
+        for day,port_cash in part_port.items():
+            if port_cash == "":
+                hist_port.append(-1.0)
+            else:
+                data_1 = port_cash.split("?")
+                cash = float(data_1[0])
+                pf_val = 0.0
+                if not data_1[1] == "":
+                    port = data_1[1].split(";")[:-1]
+                    for data_2 in port:
+                        data_3 = data_2.split("|")
+                        pf_val += float(data_3[1]) * int(data_3[2])
+                hist_port.append(cash + pf_val)
+
+
     while True:
 
         print("Enter a valid ticker, 'portfolio' for the total portfolio value, or '.' to return.")
@@ -29,8 +52,26 @@ def show_graphs():
         if tck == '.':
             return
         elif tck == 'PORTFOLIO':
-            #TODO
-            print("\nTODO\n")
+            if len(hist_port) == 0:
+                print("\nThis portfolio is too recent to have a graph.\n")
+            else:
+                cont = 0
+                yaxis = []
+                for h in hist_port:
+                    if h < 0:
+                        cont += 1
+                    else:
+                        yaxis.append(h)
+                xaxis = range(0,7-cont)
+                plt.xticks(xaxis)
+                plt.ylabel("Value")
+                plt.xlabel("Day")
+                if cont < 6:
+                    plt.plot(xaxis,yaxis)
+                else:
+                    plt.plot(xaxis,yaxis,'ro')
+                plt.show()
+
         elif tck not in stocks:
             print("\nYou don't own any {} stocks.\n".format(tck))
         else:
@@ -55,7 +96,6 @@ def show_graphs():
             else:
                 print("\nThis stock is too recent to have a graph.\n")
 
-                
 def write_portfolio(line_num):
 
     global username
@@ -204,6 +244,7 @@ def buy_stock():
                     portfolio["cash"] = cash
 
                     history.append([datetime.now(),"BUY",tck,price,ans,ans*price,cash])
+                    stsv.initial_save(tck)
 
                 else:
                     print("Invalid Quantity. Transaction Aborted.\n")
@@ -311,6 +352,10 @@ def write_history():
             line = "{};{};{};{};{};{};{}\n".format(dateT,oprt,tck,price,quant,total,cash)
 
             f.write(line)
+
+def find_articles():
+    print("\nCURRENT ARTICLES\n")
+    scrp.get_articles("Finance")
 
 def show_history():
 
@@ -428,7 +473,8 @@ def main():
         print("5. Transaction History")
         print("6. Show Graphs")
         print("7. Send Emails")
-        print("8. Quit")
+        print("8. See Articles")
+        print("9. Quit")
 
         try:
             ans = int(input("\nChoose an option: "))
@@ -457,6 +503,8 @@ def main():
             print(command)
             os.system(command)
         elif (ans == 8):
+            find_articles()
+        elif (ans == 9):
             write_portfolio(line_num)
             write_history()
 

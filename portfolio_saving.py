@@ -45,7 +45,7 @@ def initial_save(username):
         with open("portfoliohistory.txt", "a") as file:
             file.write(tempString)
         overall[username] = temp
-        print(overall[username])
+        # print(overall[username])
     return
 
 # Should be called when a user account is reset

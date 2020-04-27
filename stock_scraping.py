@@ -1,20 +1,7 @@
 import bs4
 import requests
-import argparse
 from bs4 import BeautifulSoup
-#from googlesearch import search
 from urllib.request import urlopen
-
-# Potential argument parsing function, probably won't be here in main code
-def parse_args():
-    parser = argparse.ArgumentParser(description='Parsing command line for this HW')
-    parser.add_argument('-stocks', nargs='+')
-    parser.add_argument('-search', nargs=0)
-    args = parser.parse_args()
-    if (len(args.stocks) > 1):
-        raise NameError("Can only put in one stock")
-
-    return args
 
 # Given ticker symbol, determines the name of the respective company, "NO COMPANY" if DNE
 def get_symbol(stock):
@@ -44,16 +31,10 @@ def scrape_site(stock):
     return fprice
 
 # Given any query and integer amount i, gives the first i news articles on query
-# For our use, will likely look up corporation names or "Finance" and return articles to user
-def get_articles(query, i):
-    '''
-    FIRST ATTEMPT: Prints google search overall
-    print(query)
-    for j in search(query, tld="com", num=10, stop=10, pause=2):
-        print(j)
-    '''
+# For our use, will look up corporation names or "Finance" by default and return articles to user
+def get_articles(query):
 
-    # SECOND ATTEMPT: Prints Google news articles based on query
+    # Prints Google news articles based on query
     news_url="https://news.google.com/rss/search?q=" + query + "&hl=en-US&gl=US&ceid=US:en"
     Client=urlopen(news_url)
     xml_page=Client.read()
@@ -71,17 +52,9 @@ def get_articles(query, i):
         print("-"*60)
         j = j + 1
         # Sets the number of articles you want to print
-        if i == j:
+        if j == 5:
             return
 
 
 if __name__ == '__main__':
-    '''
-    symbol = parse_args()
-    company = get_symbol(symbol)
-    if company != "NO COMPANY":
-        price = scrape_site(symbol)
-        print(price)
-    get_articles("Finance")
-    '''
-    get_articles("Finance", 2)
+    get_articles("Apple")
