@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import portfolio_saving as ps
 
 def choose_username():
     #the user inputs a username that is not taken
@@ -45,7 +46,8 @@ def main():
 
     with open('portfolio.txt', 'a') as f:
         f.write(username+":10000.00:\n")
-    
-    print("your account has been created!") 
+
+    ps.initial_save(username)
+    print("your account has been created!")
 
 main()
