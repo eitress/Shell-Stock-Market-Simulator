@@ -245,6 +245,7 @@ def buy_stock():
 
                     history.append([datetime.now(),"BUY",tck,price,ans,ans*price,cash])
                     stsv.initial_save(tck)
+                    stsv.general_save(tck, ans)
 
                 else:
                     print("Invalid Quantity. Transaction Aborted.\n")
