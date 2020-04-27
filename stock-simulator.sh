@@ -8,11 +8,53 @@ import os
 import stock_saving as stsv
 import stock_scraping as scrp
 import argparse
+import fileinput
 
 portfolio = {}
 history = []
 username = ""
 
+def restart_user_portfolio(username):
+    reading_file = open("./portfolio.txt", "r")
+    new_file_content = ""
+    print("you are about to read the file")
+    for line in reading_file:
+        split_line = line.split(":")
+        print("here is the line")
+        print(split_line)
+        print("here is the username")
+        print(username)
+        if split_line[0] == username:
+            print("adding the replacement to new content")
+            new_file_content += "" + username + ":10000.0:\n"
+        else:
+            print("you are writing the original line")
+            print(line)
+            new_file_content += line
+    print("here is the new file content")
+    print(new_file_content)
+
+    reading_file.close()    
+    print("wiping the file")
+    
+    os.remove("portfolio.txt")
+    print("the file has been removed")
+    
+    with open('portfolio.txt', 'w') as portfolio:
+        portfolio.write(new_file_content)        
+
+    #file = open("./portfolio.txt", "w")
+    #file.truncate(0)
+    #file.close()
+
+    #new_file = open("./portfolio.txt", "w")
+    #new_file.write(new_file_content)
+    #new_file.close()     
+
+def erase_user_history(username):
+    path = "./history/" + username + ".txt"
+    open(path, "w").close()
+ 
 def show_graphs():
 
     global username
@@ -136,7 +178,7 @@ def parse_portfolio():
             if account[0] == username:
                 break
             line_num += 1
-
+    
     portfolio["cash"] = float(account[1])
     portfolio["stocks"] = {}
 
@@ -475,7 +517,8 @@ def main():
         print("6. Show Graphs")
         print("7. Send Emails")
         print("8. See Articles")
-        print("9. Quit")
+        print("9. Restart Simulation")
+        print("10. Quit")
 
         try:
             ans = int(input("\nChoose an option: "))
@@ -506,6 +549,10 @@ def main():
         elif (ans == 8):
             find_articles()
         elif (ans == 9):
+            pfsv.reset_user(username)
+            restart_user_portfolio(username)
+            erase_user_history(username)
+        elif (ans == 10):
             write_portfolio(line_num)
             write_history()
 
