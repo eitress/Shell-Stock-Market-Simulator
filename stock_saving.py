@@ -49,6 +49,29 @@ def initial_save(ticker):
         # print(overall[ticker])
     return
 
+def general_save(ticker, value):
+    with open("overallstock.txt", "r") as file:
+        data = file.readlines()
+
+    not_enclosed = True
+
+    for i in range(len(data)):
+        temp = data[i].split(":")
+        if temp[0] == ticker:
+            not_enclosed = False
+            temp_value = int(temp[1].rstrip('\n'))
+            mod_value = temp_value + value
+            data[i] = ticker + ":" + str(mod_value) + "\n"
+            break
+
+    with open("overallstock.txt", "w") as file:
+        file.writelines(data)
+
+    if not_enclosed:
+        tempString = ticker + ":" + str(value)
+        with open("overallstock.txt", "a") as file:
+            file.write(tempString)
+
 # Updates the dictonary and file with the current price of a stock as the most recent
 # Will likely only be called by the crontab
 def update_all():
