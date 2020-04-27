@@ -4,13 +4,12 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from getpass import getpass
-
+import argparse
 
 def read_template(filename):
 	with open(filename, 'r', encoding='utf-8') as template_file:
 		template_file_content = template_file.read()
-	return template_file_content
-
+	return Template(template_file_content)
 
 def get_contacts(filename):
 	emails = []
@@ -19,14 +18,27 @@ def get_contacts(filename):
 			emails.append(a_email.split()[0])
 	return emails
 
-def main():	
+def main():
+	#get the username
+	parser = argparse.ArgumentParser()
+	parser.add_argument('username')
+	args = parser.parse_args()
+	current_user = args.username
+	port_value = 0
+	#get the total value of the portfolio
+	portfolio = open('./portfolio.txt', 'r')
+	portfolio_lines = portfolio.readlines()
+	for line in portfolio_lines:
+		split_line = line.split(':')
+		if current_user == split_line[0]:
+			port_value = split_line[1]
+			print("the port value is " + port_value)
+	portfolio.close()	
 	#set up SMTP server
-
 	# default email provider
 	host = "smtp.gmail.com"
 	port = 587
 	selection = "Gmail"
-	print("about to enter the while loop")
 	provider_complete = False
 
 	# select email provider 
@@ -70,7 +82,8 @@ def main():
 	s.login(username, password)
 	emails = get_contacts('./contacts.txt') 
 	print("successfully retrieved contacts")
-	message = read_template('./email-content.txt')
+	message_template = read_template('./email-content.txt')
+	message = message_template.substitute(VALUE="$" + port_value)
 	print("successfully retrieved message")
 	
 	# email each contact
