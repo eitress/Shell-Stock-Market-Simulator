@@ -24,4 +24,6 @@ After login, users can perform the following actions by following the prompts:
 
 - users can restart their account
 
+- users can quit the application
+
 history of stock changes, portfolio changes, overall stock purchase saved. aismaiel account is hardcoded such that it displays a graph for ticker AAPL and overall portfolio.
