@@ -84,6 +84,7 @@ def update_all():
         overall[stock][4] = overall[stock][3]
         overall[stock][3] = overall[stock][2]
         overall[stock][2] = overall[stock][1]
+        # Newest price is most recent closing price
         overall[stock][1] = scrp.scrape_site(stock)
         tempString = stock
         for i in range(1,8):
@@ -91,11 +92,6 @@ def update_all():
         tempString = tempString + "\n"
         with open("stockhistory.txt", "a") as file:
             file.write(tempString)
-
-        # Ignore this
-        # AAPL:1:2:3:4:5:6:7
-        # GM:23:23:23:23:23:23:23
-        # MSFT:-1:-1:-1:-1:-1:-1:-1
 
 # Will likely need to be called to create pyplots
 # Returns the current dictionary

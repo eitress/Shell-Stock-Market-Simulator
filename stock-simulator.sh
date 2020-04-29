@@ -14,12 +14,13 @@ portfolio = {}
 history = []
 username = ""
 
+# Restarts the current user portfolio to default values
 def restart_user_portfolio(line_num):
     global username
     global portfolio
-    
+
     new_line = username+":10000.00:\n"
-    
+
     with open('portfolio.txt', 'r') as f:
         data = f.readlines()
 
@@ -31,17 +32,19 @@ def restart_user_portfolio(line_num):
     portfolio = {}
     parse_portfolio()
 
+# Remove a given user's history
 def erase_user_history():
     global username
     global history
-    
+
     filename = "history/" + username + ".txt"
 
     if os.path.exists(filename):
         os.remove(path)
 
     history = []
- 
+
+# Uses pyplot to show changes in individual stocks and the overall portfolio
 def show_graphs():
 
     global username
@@ -125,6 +128,7 @@ def show_graphs():
             else:
                 print("\nThis stock is too recent to have a graph.\n")
 
+# Rerewites the portfolio file
 def write_portfolio(line_num):
 
     global username
@@ -151,6 +155,7 @@ def write_portfolio(line_num):
     with open('portfolio.txt', 'w') as f:
         f.writelines(data)
 
+# Gets information from the portfolio file
 def parse_portfolio():
 
     global username
@@ -165,7 +170,7 @@ def parse_portfolio():
             if account[0] == username:
                 break
             line_num += 1
-    
+
     portfolio["cash"] = float(account[1])
     portfolio["stocks"] = {}
 
@@ -180,6 +185,7 @@ def parse_portfolio():
 
     return line_num
 
+# Gets values from the current portfolio to display to the user
 def show_portfolio():
 
     print("\nPORTFOLIO\n")
@@ -219,6 +225,7 @@ def show_portfolio():
 
     print("Cash: {}".format(round(cash,2)))
 
+# Gives users the option to buy stocks
 def buy_stock():
 
     print("BUY STOCKS\n")
@@ -279,6 +286,7 @@ def buy_stock():
                 else:
                     print("Invalid Quantity. Transaction Aborted.\n")
 
+# Gives users the option to sell stocks
 def sell_stock():
 
     print("SELL STOCKS\n")
@@ -335,6 +343,7 @@ def sell_stock():
                 else:
                     print("Invalid Quantity. Transaction Aborted.\n")
 
+# Get the price of any valid ticker
 def get_price():
 
     print("\nCHECK PRICE\n")
@@ -357,6 +366,7 @@ def get_price():
                 print("Ticker: "+tck)
                 print("Price: {}\n".format(price))
 
+# Add to a user history
 def write_history():
     global history
     global username
@@ -383,10 +393,12 @@ def write_history():
 
             f.write(line)
 
+# Get finance articles
 def find_articles():
     print("\nCURRENT ARTICLES\n")
     scrp.get_articles("Finance")
 
+# Show a user a history of their previous transactions
 def show_history():
 
     global username
@@ -455,6 +467,7 @@ def login():
 def segment():
     print("\n-----------------------------------------------------------------------------------\n")
 
+# Main interface
 def main():
 
     parser = argparse.ArgumentParser(description='Either log in or create a new account. Upon creating a new account, you will start with $10,000.00 of cash to invest. After logging in, you can view your portfolio, buy stocks, sell stocks, check stock prices, view your transaction history, see graphs, or send emails to other users about your progress.')
@@ -517,6 +530,7 @@ def main():
 
         segment()
 
+        # Various option actions based on user selection
         if (ans == 1):
             show_portfolio()
         elif (ans == 2):
@@ -548,7 +562,7 @@ def main():
         else:
             print("PLEASE PICK A VALID OPTION.\n")
 
-
+# Runs the main function
 if __name__ == '__main__':
 
     main()
