@@ -16,7 +16,7 @@ After login, users can perform the following actions by following the prompts:
 
 - user can see their history of transactions
 
-- users can see graphs of their porfolio and individual stock changes
+- users can see graphs of their portfolio and individual stock changes
 
 - users can get emails sent to their gmail account
 
@@ -24,4 +24,4 @@ After login, users can perform the following actions by following the prompts:
 
 - users can restart their account
 
-history of stock changes, porfolio changes, overall stock purchase saved. aismaiel account is hardcoded such that it displays a graph for ticker AAPL and overall portfolio.
+history of stock changes, portfolio changes, overall stock purchase saved. aismaiel account is hardcoded such that it displays a graph for ticker AAPL and overall portfolio.
