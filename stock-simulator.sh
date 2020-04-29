@@ -14,12 +14,15 @@ portfolio = {}
 history = []
 username = ""
 
+
+# restart_user_portfolio() is used to reset a certain user's portfolio data
+
 def restart_user_portfolio(line_num):
     global username
     global portfolio
-    
+
     new_line = username+":10000.00:\n"
-    
+
     with open('portfolio.txt', 'r') as f:
         data = f.readlines()
 
@@ -31,17 +34,27 @@ def restart_user_portfolio(line_num):
     portfolio = {}
     parse_portfolio()
 
+
+
+# erase_user_history() is used to reset a certain user's transaction history data
+
 def erase_user_history():
     global username
     global history
-    
+
     filename = "history/" + username + ".txt"
 
     if os.path.exists(filename):
         os.remove(path)
 
     history = []
- 
+
+
+
+# show_graphs() is used to display to a user the value of their stocks/portfolio
+# in the last 7 days through a graph
+# Only stocks that are at least 1 day old are shown
+
 def show_graphs():
 
     global username
@@ -125,6 +138,12 @@ def show_graphs():
             else:
                 print("\nThis stock is too recent to have a graph.\n")
 
+
+
+# write_portfolio() is used to save a user's current portfolio
+# to their entry in the portfolio.txt file, thus updating
+# the current portfolio database
+
 def write_portfolio(line_num):
 
     global username
@@ -151,11 +170,18 @@ def write_portfolio(line_num):
     with open('portfolio.txt', 'w') as f:
         f.writelines(data)
 
+
+
+# parse_portfolio() gets the line number from portfolio.txt where username is located,
+# Also initializing the portfolio dictionary to the portfolio found in the database
+
 def parse_portfolio():
 
     global username
     global portfolio
     account = {}
+
+    # Parse line in portfolio.txt containing the username into a portfolio dictionary
 
     with open('portfolio.txt', 'r') as f:
         line_num = 0
@@ -165,7 +191,7 @@ def parse_portfolio():
             if account[0] == username:
                 break
             line_num += 1
-    
+
     portfolio["cash"] = float(account[1])
     portfolio["stocks"] = {}
 
@@ -179,6 +205,11 @@ def parse_portfolio():
             portfolio["stocks"][data[0]] = {"avgBuy": float(data[1]), "quant": int(data[2])}
 
     return line_num
+
+
+
+# show_portfolio() displays a user's portfolio,
+# using as Current Price a value fetched from the Internet
 
 def show_portfolio():
 
@@ -218,6 +249,13 @@ def show_portfolio():
         print("\nInvestment Value: {}".format(round(total,2)))
 
     print("Cash: {}".format(round(cash,2)))
+
+
+
+# Stock buying function:
+# While here, the user can type the ticker of companies in the prompt,
+# Get relevant information about the stock, and make or not a purchase.
+# Users can return to MAIN MENU by pressing the '.' (dot) key
 
 def buy_stock():
 
@@ -279,6 +317,13 @@ def buy_stock():
                 else:
                     print("Invalid Quantity. Transaction Aborted.\n")
 
+
+
+# Stock selling function:
+# While here, the user can type the ticker of companies in the prompt,
+# Get relevant information about the stock, and make or not a sale.
+# Users can return to MAIN MENU by pressing the '.' (dot) key
+
 def sell_stock():
 
     print("SELL STOCKS\n")
@@ -335,6 +380,13 @@ def sell_stock():
                 else:
                     print("Invalid Quantity. Transaction Aborted.\n")
 
+
+
+# Get Stock Price function:
+# While here, the user can type the ticker of companies in the prompt,
+# And get the stock price if the company is valid.
+# Users can return to MAIN MENU by pressing the '.' (dot) key
+
 def get_price():
 
     print("\nCHECK PRICE\n")
@@ -356,6 +408,12 @@ def get_price():
                 print("\nName: "+comp_name)
                 print("Ticker: "+tck)
                 print("Price: {}\n".format(price))
+
+
+
+# write_history() is used to save a user's current history
+# to their history/[username].txt file, thus updating
+# the transaction history database
 
 def write_history():
     global history
@@ -383,9 +441,17 @@ def write_history():
 
             f.write(line)
 
+
+
+# find_articles() displays to the user articles related to Finance
+
 def find_articles():
     print("\nCURRENT ARTICLES\n")
     scrp.get_articles("Finance")
+
+
+
+# show_history() displays to a user a list of their transactions
 
 def show_history():
 
@@ -426,9 +492,11 @@ def show_history():
 
         print("{:>12} {:>10} {:>6} {:>8} {:>10} {:>15} {:>15}".format(dateT,oprt,tck,price,quant,total,cash))
 
-#returns the current users username, will be userd to all user info
+
+
+# returns the current users username, will be userd to all user info
+
 def login():
-    #TODO: get an input username and password
     #find the line in users.txt that matches input otherwise
     #try again
     has_logged_in = False
@@ -452,8 +520,19 @@ def login():
                     return username
         print("This username and password combination was not found. Try again please.")
 
+
+
+# segment() is prints a string that will be used to visulally separate
+# different sections in the application
+
 def segment():
     print("\n-----------------------------------------------------------------------------------\n")
+
+
+
+# The MAIN function captures user input when logging in / creating an account,
+# as well as when selecting the options in MAIN MENU. It then routes the program
+# to the appropriate function
 
 def main():
 
@@ -490,6 +569,8 @@ def main():
     print("Hello, " + username + "! It's nice to see you again.")
     print("")
 
+    # Get line number from portfolio.txt where username is located
+    # Also, initialize portfolio
     line_num = parse_portfolio()
 
     while True:
