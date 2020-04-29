@@ -1,24 +1,27 @@
 run with ./stock-simulator and follow prompts
 
-current functionality:
 prompt asks to login or create an account
 user can log in
-user can create an account then log in
+user can create an account then log in (recommended for first use)
 
-send emails is implemented
+After login, users can perform the following actions by following the prompts:
 
-user can buy stocks
+- user can buy stocks
 
-user can sell stocks
+- user can sell stocks
 
-user can see their portfolio
+- user can see their portfolio
 
-user can see the price of a certain stock
+- user can see the price of a certain stock
 
-user can see their history of transactions
+- user can see their history of transactions
 
-users can view current finance articles
+- users can see graphs of their porfolio and individual stock changes
 
-users can see graphs of their porfolio and individual stock changes
+- users can get emails sent to their gmail account
 
-history of stock changes, porfolio changes, overall stock purchase saved
+- users can view current finance articles
+
+- users can restart their account
+
+history of stock changes, porfolio changes, overall stock purchase saved. aismaiel account is hardcoded such that it displays a graph for ticker AAPL and overall portfolio.
