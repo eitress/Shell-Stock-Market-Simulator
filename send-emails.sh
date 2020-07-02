@@ -15,7 +15,8 @@ def get_contacts(filename):
 	emails = []
 	with open(filename, mode='r', encoding='utf-8') as contacts_file:
 		for a_email in contacts_file:
-			emails.append(a_email.split()[0])
+			editted_email = "<" + a_email + ">"
+			emails.append(editted_email)
 	return emails
 
 def main():

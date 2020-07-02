@@ -9,6 +9,7 @@ import stock_saving as stsv
 import stock_scraping as scrp
 import argparse
 import fileinput
+import math
 
 portfolio = {}
 history = []
@@ -280,7 +281,7 @@ def buy_stock():
             else:
                 price = scrp.scrape_site(tck)
 
-                max_quant = cash / price
+                max_quant = math.floor(cash / price)
 
                 print("\nName: "+comp_name)
                 print("Ticker: "+tck)

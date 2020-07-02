@@ -1,1 +1,3 @@
 MSFT:4
+GOOG:9
+GM:300
