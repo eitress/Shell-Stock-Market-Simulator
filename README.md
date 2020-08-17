@@ -1,3 +1,4 @@
+# Stock Market Simulator
 run with ./stock-simulator and follow prompts
 
 prompt asks to login or create an account
